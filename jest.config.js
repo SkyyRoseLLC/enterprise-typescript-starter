@@ -25,7 +25,7 @@ module.exports = {
       statements: 80,
     },
   },
-  moduleNameMapping: {
+  moduleNameMapper: {
     '^@backend/(.*)$': '<rootDir>/src/backend/$1',
     '^@frontend/(.*)$': '<rootDir>/src/frontend/$1',
     '^@shared/(.*)$': '<rootDir>/src/shared/$1',
