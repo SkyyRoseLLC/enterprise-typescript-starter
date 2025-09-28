@@ -23,7 +23,6 @@ export type MonitoringAgentOptions = {
 
 export class MonitoringAgent extends EventEmitter {
   private running = false;
-  private lastBeat = 0;
 
   constructor(
     private readonly deps: { logger: ILogger; metrics?: IMetrics; tracer?: ITracer },
@@ -62,7 +61,7 @@ export class MonitoringAgent extends EventEmitter {
         this.deps.logger.error(`[MonitoringAgent:${this.opts.name}] heartbeat failed`, { err });
       } finally {
         span?.end();
-        this.lastBeat = Date.now();
+        // Heartbeat completed
         await this.sleep(this.opts.heartbeatIntervalMs!);
       }
     }

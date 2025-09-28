@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { Logger } from '../../../utils/logger';
+import { Logger } from '../../../../../../utils/logger';
 
 /**
  * Result type for agent operations
@@ -124,7 +124,7 @@ export class BackendAgent extends Agent {
     }
 
     const startTime = Date.now();
-    this.logger.info(`Executing BackendAgent ${this.config.name} with input:`, input);
+    this.logger.info(`Executing BackendAgent ${this.config.name} with input:`, { input });
 
     try {
       // Implement your agent logic here
@@ -215,7 +215,7 @@ export const errorHandler = (
   const statusCode = (error as any).statusCode || 500;
   res.status(statusCode).json({
     success: false,
-    error: process.env.NODE_ENV === 'production' ? 'Internal Server Error' : error.message,
+    error: process.env['NODE_ENV'] === 'production' ? 'Internal Server Error' : error.message,
     timestamp: new Date().toISOString()
   });
 };

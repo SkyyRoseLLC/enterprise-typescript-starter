@@ -280,7 +280,7 @@ export class WordPressAgent extends EventEmitter {
     try {
       await this.httpClient.get(`${this.config.baseUrl}/wp-json/wp/v2/users/me`);
     } catch (error) {
-      throw new Error(`WordPress connection validation failed: ${error.message}`);
+      throw new Error(`WordPress connection validation failed: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
 

@@ -45,8 +45,8 @@ export class AuthenticationAgent extends EventEmitter {
   }
 
   async issueTokens(creds: Credentials) {
-    const access = await this.signer.sign({ sub: creds.subject, ...creds.claims, typ: 'access' }, { expiresInSec: this.opts.accessTtlSec });
-    const refresh = await this.signer.sign({ sub: creds.subject, typ: 'refresh' }, { expiresInSec: this.opts.refreshTtlSec });
+    const access = await this.signer.sign({ sub: creds.subject, ...creds.claims, typ: 'access' }, { expiresInSec: this.opts.accessTtlSec! });
+    const refresh = await this.signer.sign({ sub: creds.subject, typ: 'refresh' }, { expiresInSec: this.opts.refreshTtlSec! });
     const sessionId = `sess:${creds.subject}:${this.deps.clock?.now() ?? Date.now()}`;
     await this.sessions.put(sessionId, { sub: creds.subject, claims: creds.claims }, this.opts.refreshTtlSec!);
     this.emit('issued', { sub: creds.subject, sessionId });
