@@ -202,3 +202,12 @@ function cryptoRandomId() {
   }
   return Math.random().toString(36).slice(2);
 }
+
+function isAbortRecoverable(err: unknown): boolean {
+  // Check if it's an AbortError that might be recoverable
+  if (err instanceof Error && err.name === 'AbortError') {
+    return true;
+  }
+  // Add other recoverable error conditions as needed
+  return false;
+}

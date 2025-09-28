@@ -41,7 +41,7 @@ export class OrchestrationAgent {
   constructor(
     private readonly bus: IEventBus,
     private readonly logger: ILogger,
-    private readonly clock: IClock,
+    _clock: IClock,
     private readonly opts: OrchestrationOptions = {}
   ) {}
 

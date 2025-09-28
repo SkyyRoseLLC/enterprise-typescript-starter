@@ -50,6 +50,7 @@
 
     /* Completeness */
     "skipLibCheck": true,
+    "isolatedModules": true,
 
     /* Advanced */
     "baseUrl": "./",

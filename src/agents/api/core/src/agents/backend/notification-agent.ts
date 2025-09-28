@@ -106,7 +106,7 @@ export class NotificationAgent extends EventEmitter {
     if (eligible.length === 0) throw new Error(`No provider supports channel ${channel}`);
     // naive round-robin by time slice
     const idx = Math.floor(Date.now() / 10_000) % eligible.length;
-    return eligible[idx];
+    return eligible[idx]!;
   }
 
   private sleep(ms: number) { return new Promise(r => setTimeout(r, ms)); }
