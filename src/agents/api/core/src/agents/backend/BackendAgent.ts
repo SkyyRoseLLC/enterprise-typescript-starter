@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { Logger } from '../../../utils/logger';
+import { Logger } from '../../../../../../utils/logger';
 
 /**
  * Result type for agent operations
@@ -73,7 +73,7 @@ export abstract class Agent {
       this.logger.info(`Health check for agent ${this.config.name}`);
       return true;
     } catch (error) {
-      this.logger.error(`Health check failed for agent ${this.config.name}:`, error);
+      this.logger.error(`Health check failed for agent ${this.config.name}:`, { error });
       return false;
     }
   }
@@ -108,7 +108,7 @@ export class BackendAgent extends Agent {
       this.isInitialized = true;
       this.logger.info(`BackendAgent ${this.config.name} initialized successfully`);
     } catch (error) {
-      this.logger.error(`Failed to initialize BackendAgent ${this.config.name}:`, error);
+      this.logger.error(`Failed to initialize BackendAgent ${this.config.name}:`, { error });
       throw error;
     }
   }
@@ -124,7 +124,7 @@ export class BackendAgent extends Agent {
     }
 
     const startTime = Date.now();
-    this.logger.info(`Executing BackendAgent ${this.config.name} with input:`, input);
+    this.logger.info(`Executing BackendAgent ${this.config.name} with input:`, { input });
 
     try {
       // Implement your agent logic here
@@ -142,7 +142,7 @@ export class BackendAgent extends Agent {
       return result;
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      this.logger.error(`BackendAgent ${this.config.name} execution failed:`, error);
+      this.logger.error(`BackendAgent ${this.config.name} execution failed:`, { error });
       
       return {
         success: false,
@@ -165,7 +165,7 @@ export class BackendAgent extends Agent {
       this.isInitialized = false;
       this.logger.info(`BackendAgent ${this.config.name} destroyed successfully`);
     } catch (error) {
-      this.logger.error(`Failed to destroy BackendAgent ${this.config.name}:`, error);
+      this.logger.error(`Failed to destroy BackendAgent ${this.config.name}:`, { error });
       throw error;
     }
   }
@@ -215,7 +215,7 @@ export const errorHandler = (
   const statusCode = (error as any).statusCode || 500;
   res.status(statusCode).json({
     success: false,
-    error: process.env.NODE_ENV === 'production' ? 'Internal Server Error' : error.message,
+    error: process.env['NODE_ENV'] === 'production' ? 'Internal Server Error' : error.message,
     timestamp: new Date().toISOString()
   });
 };

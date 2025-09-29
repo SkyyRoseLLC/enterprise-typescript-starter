@@ -41,7 +41,7 @@ export class OrchestrationAgent {
   constructor(
     private readonly bus: IEventBus,
     private readonly logger: ILogger,
-    private readonly clock: IClock,
+    private readonly clock: IClock, // Used for timestamping
     private readonly opts: OrchestrationOptions = {}
   ) {}
 
@@ -60,14 +60,25 @@ export class OrchestrationAgent {
     while (true) {
       try {
         await handler.handle(cmd, ctx);
-        await this.bus.publish({ type: 'workflow.step.completed', cmdType: cmd.type, traceId: ctx.traceId });
+        await this.bus.publish({ 
+          type: 'workflow.step.completed', 
+          cmdType: cmd.type, 
+          traceId: ctx.traceId,
+          timestamp: this.clock.now()
+        });
         return;
       } catch (err) {
         attempt++;
         this.logger.warn('workflow.step.retry', { type: cmd.type, attempt, error: String(err) });
         if (attempt > maxRetries) {
           await this.compensate(cmd, ctx);
-          await this.bus.publish({ type: 'workflow.step.failed', cmdType: cmd.type, traceId: ctx.traceId, error: String(err) });
+          await this.bus.publish({ 
+            type: 'workflow.step.failed', 
+            cmdType: cmd.type, 
+            traceId: ctx.traceId, 
+            error: String(err),
+            timestamp: this.clock.now()
+          });
           throw err;
         }
         await sleep(backoff(base, attempt));
