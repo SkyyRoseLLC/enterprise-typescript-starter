@@ -9,6 +9,7 @@
     "esModuleInterop": true,
     "allowJs": true,
     "checkJs": false,
+    "jsx": "react-jsx",
     "outDir": "./dist",
     "rootDir": "./",
     "declaration": true,
@@ -34,7 +35,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
+    "noPropertyAccessFromIndexSignature": false,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "baseUrl": "./",
@@ -47,10 +48,7 @@
     "types": ["node", "jest"],
     "typeRoots": ["./node_modules/@types", "./src/types"]
   },
-  "include": [
-    "src/**/*",
-    "tests/**/*"
-  ],
+  "include": ["src/**/*", "tests/**/*", "*.config.js", ".eslintrc.js"],
   "exclude": [
     "node_modules",
     "dist",

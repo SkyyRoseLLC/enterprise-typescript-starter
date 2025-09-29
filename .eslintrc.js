@@ -26,13 +26,7 @@ module.exports = {
     'plugin:import/typescript',
     'prettier',
   ],
-  plugins: [
-    '@typescript-eslint',
-    'react',
-    'react-hooks',
-    'jsx-a11y',
-    'import',
-  ],
+  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'jsx-a11y', 'import'],
   settings: {
     react: {
       version: 'detect',
@@ -56,11 +50,11 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 'warn',
     '@typescript-eslint/prefer-nullish-coalescing': 'error',
     '@typescript-eslint/prefer-optional-chain': 'error',
-    
+
     // General rules
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    
+
     // Import rules
     'import/order': [
       'error',
@@ -80,7 +74,7 @@ module.exports = {
         },
       },
     ],
-    
+
     // React rules
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',

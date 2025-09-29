@@ -6,7 +6,7 @@
     "lib": ["ES2022"],
     "types": ["node", "jest"],
     "outDir": "./dist/backend",
-    "rootDir": "./src/backend"
+    "rootDir": "./",
   },
   "include": [
     "src/backend/**/*",
