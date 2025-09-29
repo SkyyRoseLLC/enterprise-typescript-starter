@@ -1,0 +1,193 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  NODE_VERSION: '18'
+  DOCKER_IMAGE: enterprise-typescript-starter
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Test and Lint
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run linter
+      run: npm run lint
+
+    - name: Check code formatting
+      run: npm run format:check
+
+    - name: Run type checking
+      run: npm run type-check
+
+    - name: Run tests
+      run: npm run test:coverage
+      env:
+        JWT_SECRET: test-jwt-secret-for-ci
+        LOG_LEVEL: error
+
+    - name: Upload coverage reports
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage/lcov.info
+        flags: unittests
+        name: codecov-umbrella
+
+  build:
+    runs-on: ubuntu-latest
+    name: Build Application
+    needs: test
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build backend
+      run: npm run build:backend
+
+    - name: Build frontend
+      run: npm run build:frontend
+
+    - name: Archive build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: dist-files
+        path: dist/
+        retention-days: 7
+
+  docker:
+    runs-on: ubuntu-latest
+    name: Build and Test Docker Image
+    needs: [test, build]
+    if: github.event_name == 'push'
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./Dockerfile
+        push: false
+        tags: ${{ env.DOCKER_IMAGE }}:latest
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+    - name: Test Docker image
+      run: |
+        docker run -d --name test-container -p 3000:3000 -e JWT_SECRET=test-secret ${{ env.DOCKER_IMAGE }}:latest
+        sleep 10
+        curl -f http://localhost:3000/api/health || exit 1
+        docker stop test-container
+        docker rm test-container
+
+  security:
+    runs-on: ubuntu-latest
+    name: Security Scan
+    needs: test
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run security audit
+      run: npm audit --audit-level=moderate
+
+    - name: Run Snyk security scan
+      uses: snyk/actions/node@master
+      continue-on-error: true
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: --severity-threshold=medium
+
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy to Production
+    needs: [test, build, docker]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment: production
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Configure deployment
+      run: |
+        echo "Deployment would happen here"
+        echo "This is where you'd deploy to your production environment"
+        echo "Examples: AWS ECS, Kubernetes, Docker Swarm, etc."
+
+    # Example deployment steps (uncomment and modify as needed):
+    # - name: Deploy to AWS ECS
+    #   run: |
+    #     aws ecs update-service --cluster production --service app --force-new-deployment
+    #   env:
+    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     AWS_DEFAULT_REGION: us-east-1
+
+    # - name: Deploy to Kubernetes
+    #   run: |
+    #     kubectl set image deployment/app app=${{ env.DOCKER_IMAGE }}:${{ github.sha }}
+    #   env:
+    #     KUBECONFIG: ${{ secrets.KUBECONFIG }}
+
+  notify:
+    runs-on: ubuntu-latest
+    name: Notify on Success
+    needs: [test, build, docker]
+    if: always()
+
+    steps:
+    - name: Notify Slack on Success
+      if: needs.test.result == 'success' && needs.build.result == 'success' && needs.docker.result == 'success'
+      run: |
+        echo "✅ Pipeline succeeded! All tests passed and build completed."
+        # Add Slack notification here if needed
+
+    - name: Notify Slack on Failure
+      if: needs.test.result == 'failure' || needs.build.result == 'failure' || needs.docker.result == 'failure'
+      run: |
+        echo "❌ Pipeline failed! Check the logs for details."
+        # Add Slack notification here if needed
