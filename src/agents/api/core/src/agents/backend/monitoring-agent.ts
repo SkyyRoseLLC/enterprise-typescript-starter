@@ -23,7 +23,7 @@ export type MonitoringAgentOptions = {
 
 export class MonitoringAgent extends EventEmitter {
   private running = false;
-  private lastBeat = 0;
+  private lastBeat = 0; // Track last heartbeat time
 
   constructor(
     private readonly deps: { logger: ILogger; metrics?: IMetrics; tracer?: ITracer },
@@ -69,6 +69,10 @@ export class MonitoringAgent extends EventEmitter {
   }
 
   private sleep(ms: number) { return new Promise(r => setTimeout(r, ms)); }
+
+  getLastHeartbeat(): number {
+    return this.lastBeat;
+  }
 }
 
 export type MonitoringDeps = ConstructorParameters<typeof MonitoringAgent>[0];

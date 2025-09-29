@@ -171,6 +171,11 @@ export class ApiAgent {
   }
 }
 
+function isAbortRecoverable(err: unknown): boolean {
+  // Check if error is recoverable (not an AbortError)
+  return !(err instanceof Error && err.name === 'AbortError');
+}
+
 class RetriableError extends Error {}
 
 function withQuery(url: string, q?: Record<string, string | number | boolean | undefined>) {
