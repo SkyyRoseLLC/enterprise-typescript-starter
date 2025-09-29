@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+
     "target": "ES2022",
     "lib": ["ES2022"],
     "module": "CommonJS",
@@ -12,10 +13,43 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "removeComments": true,
+
+    /* Language and Environment */
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "useDefineForClassFields": true,
+
+    /* Modules */
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "allowImportingTsExtensions": false,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+
+    /* Emit */
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "removeComments": false,
+    "importHelpers": true,
+    "downlevelIteration": true,
+    "newLine": "lf",
+
+    /* Interop Constraints */
+    "forceConsistentCasingInFileNames": true,
+    "allowUmdGlobalAccess": false,
+
+    /* Type Checking */
+
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
+
     "noImplicitThis": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
@@ -41,12 +75,74 @@
   "include": [
     "src/**/*",
     "tests/**/*"
+
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "useUnknownInCatchVariables": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+
+    /* Completeness */
+    "skipLibCheck": true,
+
+    /* Advanced */
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "@agents/*": ["src/agents/*"],
+      "@api/*": ["src/agents/api/*"],
+      "@orchestration/*": ["src/agents/orchestration/*"],
+      "@background/*": ["src/agents/background/*"],
+      "@notification/*": ["src/agents/notification/*"],
+      "@auth/*": ["src/agents/authentication/*"],
+      "@monitoring/*": ["src/agents/monitoring/*"],
+      "@shared/*": ["src/shared/*"],
+      "@config/*": ["src/config/*"],
+      "@utils/*": ["src/utils/*"],
+      "@types/*": ["src/types/*"]
+    },
+    "types": ["node", "jest"],
+    "typeRoots": ["./node_modules/@types", "./src/types"]
+  },
+  "include": [
+    "src/**/*",
+    "tests/**/*",
+    "*.config.ts",
+    "*.config.js"
+
   ],
   "exclude": [
     "node_modules",
     "dist",
+
     "coverage",
     "**/*.spec.ts",
     "**/*.test.ts"
   ]
+}
+
+    "build",
+    "coverage",
+    "client/node_modules",
+    "client/dist",
+    "client/build",
+    "**/*.test.ts",
+    "**/*.spec.ts"
+  ],
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node",
+    "compilerOptions": {
+      "module": "ESNext",
+      "moduleResolution": "node"
+    }
+  }
 }
