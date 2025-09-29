@@ -18,25 +18,7 @@ export interface AuthContextType {
   error: string | null;
 }
 
-export interface User {
-  id: string;
-  email: string;
-  name: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface CreateUserRequest {
-  email: string;
-  name: string;
-  password: string;
-}
-
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
-
+// (Removed duplicate User, CreateUserRequest, and LoginRequest interfaces; use those from @shared/types)
 export interface FormField {
   name: string;
   label: string;
