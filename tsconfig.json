@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
-
     "target": "ES2022",
-    "lib": ["ES2022"],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "CommonJS",
     "moduleResolution": "node",
     "resolveJsonModule": true,
@@ -10,72 +9,20 @@
     "esModuleInterop": true,
     "allowJs": true,
     "checkJs": false,
+    "jsx": "react-jsx",
     "outDir": "./dist",
-    "rootDir": "./src",
-    "removeComments": true,
-
-    /* Language and Environment */
-    "target": "ES2022",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "useDefineForClassFields": true,
-
-    /* Modules */
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "allowImportingTsExtensions": false,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-
-    /* Emit */
+    "rootDir": "./",
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "outDir": "./dist",
     "removeComments": false,
     "importHelpers": true,
-    "downlevelIteration": true,
-    "newLine": "lf",
-
-    /* Interop Constraints */
-    "forceConsistentCasingInFileNames": true,
-    "allowUmdGlobalAccess": false,
-
-    /* Type Checking */
-
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
-
-    "noImplicitThis": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": false,
-    "noImplicitOverride": true,
-    "exactOptionalPropertyTypes": false,
-    "noPropertyAccessFromIndexSignature": false,
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
-    "baseUrl": "./",
-    "paths": {
-      "@backend/*": ["src/backend/*"],
-      "@frontend/*": ["src/frontend/*"],
-      "@shared/*": ["src/shared/*"],
-      "@tests/*": ["tests/*"]
-    }
-  },
-  "include": [
-    "src/**/*",
-    "tests/**/*"
-
     "strictBindCallApply": true,
     "strictPropertyInitialization": true,
     "noImplicitThis": true,
@@ -88,61 +35,25 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-
-    /* Completeness */
+    "noPropertyAccessFromIndexSignature": false,
+    "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-
-    /* Advanced */
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"],
-      "@agents/*": ["src/agents/*"],
-      "@api/*": ["src/agents/api/*"],
-      "@orchestration/*": ["src/agents/orchestration/*"],
-      "@background/*": ["src/agents/background/*"],
-      "@notification/*": ["src/agents/notification/*"],
-      "@auth/*": ["src/agents/authentication/*"],
-      "@monitoring/*": ["src/agents/monitoring/*"],
+      "@backend/*": ["src/backend/*"],
+      "@frontend/*": ["src/frontend/*"],
       "@shared/*": ["src/shared/*"],
-      "@config/*": ["src/config/*"],
-      "@utils/*": ["src/utils/*"],
-      "@types/*": ["src/types/*"]
+      "@tests/*": ["tests/*"]
     },
     "types": ["node", "jest"],
     "typeRoots": ["./node_modules/@types", "./src/types"]
   },
-  "include": [
-    "src/**/*",
-    "tests/**/*",
-    "*.config.ts",
-    "*.config.js"
-
-  ],
+  "include": ["src/**/*", "tests/**/*", "*.config.js", ".eslintrc.js"],
   "exclude": [
     "node_modules",
     "dist",
-
     "coverage",
     "**/*.spec.ts",
     "**/*.test.ts"
   ]
-}
-
-    "build",
-    "coverage",
-    "client/node_modules",
-    "client/dist",
-    "client/build",
-    "**/*.test.ts",
-    "**/*.spec.ts"
-  ],
-  "ts-node": {
-    "esm": true,
-    "experimentalSpecifierResolution": "node",
-    "compilerOptions": {
-      "module": "ESNext",
-      "moduleResolution": "node"
-    }
-  }
 }

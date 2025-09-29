@@ -1,0 +1,14 @@
+node_modules/
+dist/
+coverage/
+.eslintcache
+*.log
+.DS_Store
+.env*
+package-lock.json
+docker-compose*.yml
+Dockerfile
+*.md
+docs/
+scripts/
+tests/setup.ts

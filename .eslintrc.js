@@ -17,8 +17,8 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    '@typescript-eslint/recommended',
-    '@typescript-eslint/recommended-requiring-type-checking',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:jsx-a11y/recommended',
@@ -26,13 +26,7 @@ module.exports = {
     'plugin:import/typescript',
     'prettier',
   ],
-  plugins: [
-    '@typescript-eslint',
-    'react',
-    'react-hooks',
-    'jsx-a11y',
-    'import',
-  ],
+  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'jsx-a11y', 'import'],
   settings: {
     react: {
       version: 'detect',
@@ -41,6 +35,9 @@ module.exports = {
       typescript: {
         alwaysTryTypes: true,
         project: './tsconfig.json',
+      },
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
     },
   },
@@ -53,11 +50,11 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 'warn',
     '@typescript-eslint/prefer-nullish-coalescing': 'error',
     '@typescript-eslint/prefer-optional-chain': 'error',
-    
+
     // General rules
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    
+
     // Import rules
     'import/order': [
       'error',
@@ -77,7 +74,7 @@ module.exports = {
         },
       },
     ],
-    
+
     // React rules
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
