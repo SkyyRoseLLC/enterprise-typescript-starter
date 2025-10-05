@@ -1,8 +1,7 @@
 {
   "name": "enterprise-typescript-starter",
   "version": "1.0.0",
-
-  "description": "Enterprise-ready TypeScript full-stack starter with production best practices, CI/CD, Docker, and modular architecture",
+  "description": "Enterprise-ready TypeScript full-stack starter with advanced AI agent architecture",
   "main": "dist/backend/server.js",
   "scripts": {
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
@@ -27,7 +26,13 @@
     "docker:build": "docker build -t enterprise-typescript-starter .",
     "docker:run": "docker run -p 3000:3000 enterprise-typescript-starter",
     "docker:dev": "docker-compose up --build",
-    "docker:prod": "docker-compose -f docker-compose.prod.yml up --build"
+    "docker:prod": "docker-compose -f docker-compose.prod.yml up --build",
+    "agent:api": "ts-node src/agents/api/core/src/agents/backend/api-agent.ts",
+    "agent:orchestration": "ts-node src/agents/api/core/src/agents/backend/orchestration-agent.ts",
+    "agent:worker": "ts-node src/agents/api/core/src/agents/backend/worker-agent.ts",
+    "agent:notification": "ts-node src/agents/api/core/src/agents/backend/notification-agent.ts",
+    "agent:auth": "ts-node src/agents/api/core/src/agents/backend/authentication-agent.ts",
+    "agent:monitoring": "ts-node src/agents/api/core/src/agents/backend/monitoring-agent.ts"
   },
   "keywords": [
     "typescript",
@@ -37,65 +42,24 @@
     "full-stack",
     "enterprise",
     "docker",
-    "ci-cd"
+    "ci-cd",
+    "ai-agents",
+    "microservices"
   ],
   "author": "SkyyRoseLLC",
-
-  "description": "Enterprise-ready TypeScript full-stack starter with advanced AI agent architecture",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "tsc && npm run build:client",
-    "build:client": "cd client && npm run build",
-    "start": "node dist/index.js",
-    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
-    "dev:server": "nodemon --exec ts-node src/index.ts",
-    "dev:client": "cd client && npm run dev",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "lint": "eslint src/**/*.ts client/src/**/*.{ts,tsx}",
-    "lint:fix": "eslint src/**/*.ts client/src/**/*.{ts,tsx} --fix",
-    "format": "prettier --write src/**/*.ts client/src/**/*.{ts,tsx}",
-    "docker:build": "docker build -t enterprise-typescript-starter .",
-    "docker:run": "docker run -p 3000:3000 enterprise-typescript-starter",
-    "install:all": "npm install && cd client && npm install",
-    "agent:api": "ts-node src/agents/api/examples/run-example.ts",
-    "agent:orchestration": "ts-node src/agents/orchestration/examples/run-example.ts",
-    "agent:worker": "ts-node src/agents/background/examples/run-example.ts",
-    "agent:notification": "ts-node src/agents/notification/examples/run-example.ts",
-    "agent:auth": "ts-node src/agents/authentication/examples/run-example.ts",
-    "agent:monitoring": "ts-node src/agents/monitoring/examples/run-example.ts"
-  },
-  "keywords": [
-    "typescript",
-    "enterprise",
-    "agents",
-    "ai",
-    "production",
-    "scalable",
-    "architecture",
-    "microservices",
-    "full-stack"
-  ],
-  "author": "Enterprise Development Team",
-
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.2",
     "cors": "^2.8.5",
     "helmet": "^7.1.0",
     "compression": "^1.7.4",
-
     "morgan": "^1.10.0",
     "dotenv": "^16.3.1",
     "joi": "^17.11.0",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^9.0.2",
     "express-rate-limit": "^7.1.5",
-    "express-validator": "^7.0.1"
-
-    "express-rate-limit": "^7.1.5",
-    "joi": "^17.11.0",
+    "express-validator": "^7.0.1",
     "axios": "^1.6.2",
     "node-fetch": "^3.3.2",
     "bullmq": "^4.15.4",
@@ -103,11 +67,9 @@
     "nodemailer": "^6.9.7",
     "twilio": "^4.19.3",
     "firebase-admin": "^11.11.1",
-    "jsonwebtoken": "^9.0.2",
     "passport": "^0.7.0",
     "passport-oauth2": "^1.7.0",
     "passport-jwt": "^4.0.1",
-    "bcryptjs": "^2.4.3",
     "winston": "^3.11.0",
     "pino": "^8.16.2",
     "prometheus-api-metrics": "^3.2.2",
@@ -115,7 +77,6 @@
     "@opentelemetry/sdk-node": "^0.45.1",
     "@opentelemetry/instrumentation-express": "^0.34.1",
     "@opentelemetry/instrumentation-http": "^0.45.1",
-    "dotenv": "^16.3.1",
     "config": "^3.3.9",
     "inversify": "^6.0.2",
     "reflect-metadata": "^0.1.13",
@@ -127,14 +88,12 @@
     "pg": "^8.11.3",
     "typeorm": "^0.3.17",
     "mongodb": "^6.3.0"
-
   },
   "devDependencies": {
     "@types/node": "^20.10.4",
     "@types/express": "^4.17.21",
     "@types/cors": "^2.8.17",
     "@types/compression": "^1.7.5",
-
     "@types/morgan": "^1.9.9",
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.5",
@@ -142,30 +101,22 @@
     "@types/supertest": "^2.0.16",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
-    "typescript": "^5.3.3",
-    "tsx": "^4.6.2",
-
     "@types/joi": "^17.2.3",
-    "@types/jsonwebtoken": "^9.0.5",
     "@types/passport": "^1.0.16",
     "@types/passport-oauth2": "^1.4.15",
     "@types/passport-jwt": "^3.0.13",
-    "@types/bcryptjs": "^2.4.6",
     "@types/nodemailer": "^6.4.14",
     "@types/uuid": "^9.0.7",
     "@types/lodash": "^4.14.202",
     "@types/pg": "^8.10.9",
-    "@types/jest": "^29.5.8",
-    "@types/supertest": "^2.0.16",
     "typescript": "^5.3.3",
+    "tsx": "^4.6.2",
     "ts-node": "^10.9.1",
-
     "nodemon": "^3.0.2",
     "concurrently": "^8.2.2",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.1",
     "supertest": "^6.3.3",
-
     "playwright": "^1.40.1",
     "@playwright/test": "^1.40.1",
     "eslint": "^8.55.0",
@@ -204,31 +155,3 @@
     "npm": ">=8.0.0"
   }
 }
-
-    "eslint": "^8.55.0",
-    "@typescript-eslint/eslint-plugin": "^6.13.2",
-    "@typescript-eslint/parser": "^6.13.2",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.0.1",
-    "prettier": "^3.1.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^15.2.0"
-  },
-  "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=9.0.0"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm test"
-    }
-  }
-}
-

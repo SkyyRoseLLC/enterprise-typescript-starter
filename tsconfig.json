@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-
     "target": "ES2022",
-    "lib": ["ES2022"],
-    "module": "CommonJS",
-    "moduleResolution": "node",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "allowImportingTsExtensions": false,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -12,70 +12,16 @@
     "checkJs": false,
     "outDir": "./dist",
     "rootDir": "./src",
-    "removeComments": true,
-
-    /* Language and Environment */
-    "target": "ES2022",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "useDefineForClassFields": true,
-
-    /* Modules */
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "allowImportingTsExtensions": false,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-
-    /* Emit */
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "outDir": "./dist",
     "removeComments": false,
     "importHelpers": true,
     "downlevelIteration": true,
     "newLine": "lf",
-
-    /* Interop Constraints */
     "forceConsistentCasingInFileNames": true,
     "allowUmdGlobalAccess": false,
-
-    /* Type Checking */
-
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
-
-    "noImplicitThis": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": false,
-    "noImplicitOverride": true,
-    "exactOptionalPropertyTypes": false,
-    "noPropertyAccessFromIndexSignature": false,
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
-    "baseUrl": "./",
-    "paths": {
-      "@backend/*": ["src/backend/*"],
-      "@frontend/*": ["src/frontend/*"],
-      "@shared/*": ["src/shared/*"],
-      "@tests/*": ["tests/*"]
-    }
-  },
-  "include": [
-    "src/**/*",
-    "tests/**/*"
-
     "strictBindCallApply": true,
     "strictPropertyInitialization": true,
     "noImplicitThis": true,
@@ -89,11 +35,13 @@
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
-
-    /* Completeness */
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "useDefineForClassFields": true,
     "skipLibCheck": true,
-
-    /* Advanced */
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"],
@@ -104,10 +52,13 @@
       "@notification/*": ["src/agents/notification/*"],
       "@auth/*": ["src/agents/authentication/*"],
       "@monitoring/*": ["src/agents/monitoring/*"],
+      "@backend/*": ["src/backend/*"],
+      "@frontend/*": ["src/frontend/*"],
       "@shared/*": ["src/shared/*"],
       "@config/*": ["src/config/*"],
       "@utils/*": ["src/utils/*"],
-      "@types/*": ["src/types/*"]
+      "@types/*": ["src/types/*"],
+      "@tests/*": ["tests/*"]
     },
     "types": ["node", "jest"],
     "typeRoots": ["./node_modules/@types", "./src/types"]
@@ -117,25 +68,13 @@
     "tests/**/*",
     "*.config.ts",
     "*.config.js"
-
   ],
   "exclude": [
     "node_modules",
     "dist",
-
     "coverage",
     "**/*.spec.ts",
     "**/*.test.ts"
-  ]
-}
-
-    "build",
-    "coverage",
-    "client/node_modules",
-    "client/dist",
-    "client/build",
-    "**/*.test.ts",
-    "**/*.spec.ts"
   ],
   "ts-node": {
     "esm": true,
